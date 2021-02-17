@@ -1,0 +1,5 @@
+{
+  "delay": "5000",
+  "ignore":["server-data/*"],
+  "ext": "html,css,js,json"
+}
