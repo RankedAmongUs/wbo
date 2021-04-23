@@ -64,7 +64,7 @@ Tools.connect = function () {
 
 
 	this.socket = io.connect('', {
-		"path": window.location.pathname.split("/boards/")[0] + "/socket.io",
+		"path": window.location.pathname.split("/Skeld/")[0] + "/socket.io",
 		"reconnection": true,
 		"reconnectionDelay": 100, //Make the xhr connections as fast as possible
 		"timeout": 1000 * 60 * 20 // Timeout after 20 minutes

@@ -4,6 +4,12 @@ html, body, svg {
 	font-family: Liberation sans, sans-serif;
 }
 
+body {
+	background-image: url('https://scoreboard.rankedamongus.com/images/discord/amongus/mira_map.png');
+	background-repeat: no-repeat;
+	background-color: #747474;
+}
+
 #canvas {
 	transform-origin: 0 0;
 }
