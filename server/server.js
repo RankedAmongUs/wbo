@@ -83,6 +83,18 @@ function handler(request, response) {
 const boardTemplate = new templating.BoardTemplate(
   path.join(config.WEBROOT, "board.html")
 );
+const polusTemplate = new templating.BoardTemplate(
+  path.join(config.WEBROOT, "board_Polus.html")
+);
+const miraTemplate = new templating.BoardTemplate(
+  path.join(config.WEBROOT, "board_Mira.html")
+);
+const skeldTemplate = new templating.BoardTemplate(
+  path.join(config.WEBROOT, "board_Skeld.html")
+);
+const airshipTemplate = new templating.BoardTemplate(
+  path.join(config.WEBROOT, "board_AirShip.html")
+);
 const indexTemplate = new templating.Template(
   path.join(config.WEBROOT, "index.html")
 );
@@ -118,6 +130,82 @@ function handleRequest(request, response) {
         validateBoardName(parts[1]);
         // If there is no dot and no directory, parts[1] is the board name
         boardTemplate.serve(request, response);
+      } else {
+        // Else, it's a resource
+        request.url = "/" + parts.slice(1).join("/");
+        fileserver(request, response, serveError(request, response));
+      }
+      break;
+
+    case "Mira":
+      // "Mira" refers to the root directory
+      if (parts.length === 1) {
+        // '/Mira?board=...' This allows html forms to point to Mira
+        var boardName = parsedUrl.query.board || "anonymous";
+        var headers = { Location: "Mira/" + encodeURIComponent(boardName) };
+        response.writeHead(301, headers);
+        response.end();
+      } else if (parts.length === 2 && request.url.indexOf(".") === -1) {
+        validateBoardName(parts[1]);
+        // If there is no dot and no directory, parts[1] is the board name
+        miraTemplate.serve(request, response);
+      } else {
+        // Else, it's a resource
+        request.url = "/" + parts.slice(1).join("/");
+        fileserver(request, response, serveError(request, response));
+      }
+      break;
+
+    case "Skeld":
+      // "Skeld" refers to the root directory
+      if (parts.length === 1) {
+        // '/Skeld?board=...' This allows html forms to point to Skeld
+        var boardName = parsedUrl.query.board || "anonymous";
+        var headers = { Location: "Skeld/" + encodeURIComponent(boardName) };
+        response.writeHead(301, headers);
+        response.end();
+      } else if (parts.length === 2 && request.url.indexOf(".") === -1) {
+        validateBoardName(parts[1]);
+        // If there is no dot and no directory, parts[1] is the board name
+        skeldTemplate.serve(request, response);
+      } else {
+        // Else, it's a resource
+        request.url = "/" + parts.slice(1).join("/");
+        fileserver(request, response, serveError(request, response));
+      }
+      break;
+
+    case "Polus":
+      // "Polus" refers to the root directory
+      if (parts.length === 1) {
+        // '/Polus?board=...' This allows html forms to point to Polus
+        var boardName = parsedUrl.query.board || "anonymous";
+        var headers = { Location: "Polus/" + encodeURIComponent(boardName) };
+        response.writeHead(301, headers);
+        response.end();
+      } else if (parts.length === 2 && request.url.indexOf(".") === -1) {
+        validateBoardName(parts[1]);
+        // If there is no dot and no directory, parts[1] is the board name
+        polusTemplate.serve(request, response);
+      } else {
+        // Else, it's a resource
+        request.url = "/" + parts.slice(1).join("/");
+        fileserver(request, response, serveError(request, response));
+      }
+      break;
+
+    case "AirShip":
+      // "AirShip" refers to the root directory
+      if (parts.length === 1) {
+        // '/AirShip?board=...' This allows html forms to point to AirShip
+        var boardName = parsedUrl.query.board || "anonymous";
+        var headers = { Location: "AirShip/" + encodeURIComponent(boardName) };
+        response.writeHead(301, headers);
+        response.end();
+      } else if (parts.length === 2 && request.url.indexOf(".") === -1) {
+        validateBoardName(parts[1]);
+        // If there is no dot and no directory, parts[1] is the board name
+        airshipTemplate.serve(request, response);
       } else {
         // Else, it's a resource
         request.url = "/" + parts.slice(1).join("/");
@@ -177,6 +265,42 @@ function handleRequest(request, response) {
         .toString("base64")
         .replace(/[^\w]/g, "-");
       response.writeHead(307, { Location: "boards/" + name });
+      response.end(name);
+      break;
+
+    case "randomMira":
+      var name = crypto
+        .randomBytes(32)
+        .toString("base64")
+        .replace(/[^\w]/g, "-");
+      response.writeHead(307, { Location: "Mira/" + name });
+      response.end(name);
+      break;
+
+    case "randomPolus":
+      var name = crypto
+        .randomBytes(32)
+        .toString("base64")
+        .replace(/[^\w]/g, "-");
+      response.writeHead(307, { Location: "Polus/" + name });
+      response.end(name);
+      break;
+
+    case "randomSkeld":
+      var name = crypto
+        .randomBytes(32)
+        .toString("base64")
+        .replace(/[^\w]/g, "-");
+      response.writeHead(307, { Location: "Skeld/" + name });
+      response.end(name);
+      break;
+
+    case "randomAirShip":
+      var name = crypto
+        .randomBytes(32)
+        .toString("base64")
+        .replace(/[^\w]/g, "-");
+      response.writeHead(307, { Location: "AirShip/" + name });
       response.end(name);
       break;
 

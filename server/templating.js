@@ -40,7 +40,7 @@ class Template {
       accept_language_parser.pick(languages, accept_languages, opts) || "en";
     const translations = TRANSLATIONS[language] || {};
     const configuration = client_config || {};
-    const prefix = request.url.split("/boards/")[0].substr(1);
+    const prefix = request.url.split(/\/boards\/|\/Polus\/|\/Mira\/|\/Skeld\/|\/AirShip\//)[0].substr(1);
     const baseUrl = findBaseUrl(request) + (prefix ? prefix + "/" : "");
     return { baseUrl, languages, language, translations, configuration };
   }
@@ -64,7 +64,7 @@ class Template {
 class BoardTemplate extends Template {
   parameters(parsedUrl, request) {
     const params = super.parameters(parsedUrl, request);
-    const parts = parsedUrl.pathname.split("boards/", 2);
+    const parts = parsedUrl.pathname.split(/boards\/|Polus\/|Mira\/|Skeld\/|AirShip\//, 2);
     const boardUriComponent = parts[1];
     params["boardUriComponent"] = boardUriComponent;
     params["board"] = decodeURIComponent(boardUriComponent);
